@@ -14,32 +14,53 @@ class Move(BasePage):
     MOVEMETHOD = (By.XPATH, "//mat-expansion-panel/div/div/div/div[1]/div[2]/mat-form-field/div/div[1]/div/mat-select")
     MESSAGE = (By.XPATH, "//simple-snack-bar/span")
     SPEEDLIMIT = (
-    By.XPATH, "//mat-accordion/mat-expansion-panel/div/div/div/div[1]/div[3]/mat-form-field/div/div[1]/div/mat-select")
+        By.XPATH,
+        "//mat-accordion/mat-expansion-panel/div/div/div/div[1]/div[3]/mat-form-field/div/div[1]/div/mat-select")
     CHECKOVERWRITE = (By.XPATH, "//mat-expansion-panel/div/div/div/div[2]/div/mat-checkbox")
-    SUBMITBUTTON=(By.XPATH,"//button[@class='mat-focus-indicator action-button-update-global mat-raised-button mat-button-base']")
+    SUBMITBUTTON = (By.XPATH, "//button[@class='mat-focus-indicator action-button-update-global mat-raised-button "
+                              "mat-button-base']")
 
     def __init__(self, driver):
         super(Move, self).__init__(driver)
         self.driver.get(Testdata.BASE_URL)
 
-    def create_moveprofile(self, profilename, movevalue, isoverwrite,valuesync):
+    def create_moveprofile(self, profilename, movevalue, isoverwrite, valuesync, update, updateprofilename):
         self.do_click(self.GOTOPROFILE)
         self.do_click(self.MOVETAB)
         self.hard_refresh()
         self.hard_refresh()
+        if update == 'update':
+            # //span[normalize-space()='t']/../../div/button
+            MOVEMETHODVALUE = (By.XPATH, f"//span[normalize-space()='{updateprofilename}']")
+            self.do_click(MOVEMETHODVALUE)
         self.do_click(self.MOVETAB)
-        # self.execute_script("location.reload(true);")
         self.do_click(self.ADDNEW)
         self.do_send_keys(self.PROFILENAME, profilename)
         self.do_click(self.MOVEMETHOD)
         MOVEMETHODVALUE = (By.XPATH, f"//span[normalize-space()='{movevalue}']")
         self.do_click(MOVEMETHODVALUE)
         if MOVEMETHODVALUE == 'rsync':
-            RSYNCOPTIONVAL=(By.XPATH,f"//span[@class='mat-option-text'][normalize-space()='{valuesync}']")
+            RSYNCOPTIONVAL = (By.XPATH, f"//span[@class='mat-option-text'][normalize-space()='{valuesync}']")
             self.do_click(self.SPEEDLIMIT)
             self.do_click(RSYNCOPTIONVAL)
         if isoverwrite:
-            self.do_click(self.CHECKOVERWRITE)
+            if update == 'update':
+                if self.is_checkbox_checked(self.CHECKOVERWRITE):
+                    if isoverwrite:
+                        pass
+                    else:
+                        self.do_click(self.CHECKOVERWRITE)
+                else:
+                    self.do_click(self.CHECKOVERWRITE)
+            else:
+                self.do_click(self.CHECKOVERWRITE)
         self.do_click(self.SUBMITBUTTON)
         if self.is_visible(self.MESSAGE):
             return self.get_element_text(self.MESSAGE)
+
+    def Delete_moveprofile(self,profilename):
+        DELTEPATH=(By.XPATH,f"//span[normalize-space()='{profilename}']/../../div/button")
+        self.do_click(DELTEPATH)
+        if self.is_visible(self.MESSAGE):
+            return self.get_element_text(self.MESSAGE)
+

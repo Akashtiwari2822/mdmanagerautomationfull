@@ -19,6 +19,14 @@ class BasePage:
     def do_click(self, by_locator):
         WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(by_locator)).click()
 
+    def is_checkbox_checked(self, by_locator):
+        try:
+            checkbox = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(by_locator))
+            return checkbox.is_selected()
+        except Exception as e:
+            print(f"Failed to determine checkbox state: {e}")
+            return False
+
     def hard_refresh(self):
         try:
             self.driver.execute_script("location.reload(true);")
