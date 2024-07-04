@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 from Pages.BasePage import BasePage
 from Config.config import Testdata
@@ -18,7 +20,7 @@ class PreQc(BasePage):
     REMARK = (By.XPATH, "//input[@data-placeholder='Enter Remarks']")
     CHECKMETADATAERROR = (By.XPATH,"//mat-expansion-panel/div/div/div/div[2]/div[1]/mat-checkbox")
     CHECKMETADATAWARNING = (By.XPATH,"//mat-accordion/mat-expansion-panel/div/div/div/div[2]/div[2]/mat-checkbox")
-    CHECKSUMMETHODENABLE = (By.XPATH,"//mat-expansion-panel/div/div/div/div[1]/mat-checkbox")
+    CHECKSUMMETHODENABLE = (By.XPATH,"//mat-expansion-panel/div/div/div/div[1]/mat-checkbox/label")
     SUBMITBUTTON = (By.XPATH,"//button[@class='mat-focus-indicator action-button-update-global mat-raised-button "
                              "mat-button-base']")
     CONFORMATIONBUTTON = (By.XPATH,"//div[@class='cdk-overlay-container']//button[2]")
@@ -29,11 +31,15 @@ class PreQc(BasePage):
 
     def Create_validation_check_Preqcprofile(self,profilename , checksummethoenable,valueofchecksum,customererro,ignanorsum,remark,metadatwerning,metadataerror):
         self.do_click(self.GOTOPROFILE)
-        self.do_click(self.MOVETAB)
+        # self.do_click(self.MOVETAB)
+        self.hard_refresh()
+        self.hard_refresh()
         self.do_click(self.ADDNEW)
         self.do_send_keys(self.PROFILENAME,profilename)
         if checksummethoenable:
+            time.sleep(5)
             self.do_click(self.CHECKSUMMETHODENABLE)
+            time.sleep(5)
             self.do_click(self.CHECKSUMVALIDATIONMETHOD)
             MOVEMETHODVALUE = (By.XPATH, f"//span[normalize-space()='{valueofchecksum}']")
             self.do_click(MOVEMETHODVALUE)
@@ -49,11 +55,11 @@ class PreQc(BasePage):
             return self.get_element_text(self.MESSAGE)
 
     def Update_Preqcprofile(self,profilename , checksummethoenable,valueofchecksum,customererro,ignanorsum,remark,metadatwerning,metadataerror,updateprofilename):
+        self.do_click(self.GOTOPROFILE)
+        self.hard_refresh()
+        self.hard_refresh()
         MOVEMETHODVALUE = (By.XPATH, f"//span[normalize-space()='{updateprofilename}']")
         self.do_click(MOVEMETHODVALUE)
-        self.do_click(self.GOTOPROFILE)
-        self.do_click(self.MOVETAB)
-        self.do_click(self.ADDNEW)
         self.do_send_keys(self.PROFILENAME,profilename)
         if self.is_checkbox_checked(self.CHECKSUMMETHODENABLE):
             if not checksummethoenable:

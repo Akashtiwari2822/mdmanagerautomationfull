@@ -18,6 +18,16 @@ class Testdata:
 
     MOVEDELETEMESSAGE = "Move Profile deleted"
     MOVESUCESSMESSAGE = "Move Profile Saved"
+    MOVEUPDATEMESSAGE = "Move Profile Updated"
     MOVEPROFILENAMEMESSAGE = "Please enter profile name"
+
+    #Move profile message End
+
+    #PreQc profile message start
+
+    PREQCDELETEMESSAGE = "Pre QC Profile deleted"
+    PREQCUPDATEMESSAGE = "Pre QC Profile Updated"
+    PREQCPROFILENAMEMESSAGE = "Please enter profile name"
+    PREQCSAVEMESSAGE= "PreQC Profile Saved"
 
     #Move profile message End
