@@ -19,6 +19,7 @@ class Move(BasePage):
     CHECKOVERWRITE = (By.XPATH, "//mat-expansion-panel/div/div/div/div[2]/div/mat-checkbox")
     SUBMITBUTTON = (By.XPATH, "//button[@class='mat-focus-indicator action-button-update-global mat-raised-button "
                               "mat-button-base']")
+    CONFORMATIONBUTTON = (By.XPATH, "//div[@class='cdk-overlay-container']//button[2]")
 
     def __init__(self, driver):
         super(Move, self).__init__(driver)
@@ -61,6 +62,7 @@ class Move(BasePage):
     def Delete_moveprofile(self,profilename):
         DELTEPATH=(By.XPATH,f"//span[normalize-space()='{profilename}']/../../div/button")
         self.do_click(DELTEPATH)
+        self.do_click(self.CONFORMATIONBUTTON)
         if self.is_visible(self.MESSAGE):
             return self.get_element_text(self.MESSAGE)
 
