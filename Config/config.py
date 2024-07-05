@@ -31,3 +31,13 @@ class Testdata:
     PREQCSAVEMESSAGE= "PreQC Profile Saved"
 
     #Move profile message End
+
+
+    #Transfer profile message start
+
+    TRANSFERDELETEMESSAGE = "Transfer Profile deleted"
+    TRANSFERUPDATEMESSAGE = "Transfer Profile Updated"
+    TRANSFERPROFILENAMEMESSAGE = "Please enter profile name"
+    TRANSFERSAVEMESSAGE= "TransferProfile saved"
+
+    #Teransfer profile message End

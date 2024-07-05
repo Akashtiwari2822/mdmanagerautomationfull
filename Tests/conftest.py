@@ -9,7 +9,6 @@ from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 
-
 @pytest.fixture(params=["chrome"], scope='class')
 # @pytest.fixture(params=["chrome", "firefox", "edge"], scope='class')
 def init_driver(request):

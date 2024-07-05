@@ -10,7 +10,9 @@ import configparser
 
 class Test_PreQc(BaseTest):
     config = configparser.ConfigParser()
-    config.read(os.path.join('config', 'config.ini'))
+    # config.read(os.path.join('config', 'config.ini'))
+    filepath="../Config/config.ini"
+    config.read(filepath)
 
     # Read values from the config file
     updateenable = config.get('preqc', 'updateenable')
@@ -55,18 +57,9 @@ class Test_PreQc(BaseTest):
                                                                        self.checkmatadataerror)
         assert titledata == Testdata.PREQCSAVEMESSAGE
 
-    def test_PreQ_Profile_Update(self):
-        self.mainpage = PreQc(self.driver)
-        titledata = self.mainpage.Update_Preqcprofile(self.profilename, self.checksumenable,
-                                                      self.checksumenablevalue, self.checksumerror,
-                                                      self.ignorecustom, self.remark,
-                                                      self.checkmatadatawarning,
-                                                      self.checkmatadataerror)
-        assert titledata == Testdata.PREQCUPDATEMESSAGE
-
     def test_PreQ_Profile_Delete(self):
         self.mainpage = PreQc(self.driver)
-        titledata = self.mainpage.Create_validation_check_Preqcprofile(self.profilename, self.checksumenable,
+        titledata = self.mainpage.Update_Preqcprofile(self.profilename, self.checksumenable,
                                                                        self.checksumenablevalue, self.checksumerror,
                                                                        self.ignorecustom, self.remark,
                                                                        self.checkmatadatawarning,
