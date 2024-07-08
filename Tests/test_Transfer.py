@@ -70,7 +70,7 @@ class Test_Transfer(BaseTest):
                                                                           self.overwritecheck, self.checksum, self.deleteafterfailure,
                                                                           self.transferprotocal, '')
         assert testdata == Testdata.TRANSFERPROTOCOL
-        
+
     def test_Tranfer_profile_Create(self):
         self.pagename = Transfer(self.driver)
         testdata = self.pagename.Create_validation_check_Transfercprofile(self.profilename, self.validprefix,
