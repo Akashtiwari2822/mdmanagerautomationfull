@@ -9,26 +9,33 @@ from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 
-@pytest.fixture(params=["chrome"], scope='class')
-# @pytest.fixture(params=["chrome", "firefox", "edge"], scope='class')
+@pytest.fixture(params=["chrome", "firefox", "edge", "safari"], scope='class')
 def init_driver(request):
     clear_cache(dir=".")
     print("======================================= setup ========================================")
 
-    if request.param == "chrome":
-        service = ChromeService(ChromeDriverManager().install())
-        web_driver = webdriver.Chrome(service=service)
-    if request.param == "firefox":
-        service = FirefoxService(GeckoDriverManager().install())
-        web_driver = webdriver.Firefox(service=service)
-    if request.param == "edge":
-        service = EdgeService(EdgeChromiumDriverManager().install())
-        web_driver = webdriver.Edge(service=service)
-    web_driver.maximize_window()
-    # delete_cache(web_driver)
-    request.cls.driver = web_driver
-    # request.cls.driver = web_driver
+    try:
+        if request.param == "chrome":
+            service = ChromeService(ChromeDriverManager().install())
+            web_driver = webdriver.Chrome(service=service)
+        elif request.param == "firefox":
+            service = FirefoxService(GeckoDriverManager().install())
+            web_driver = webdriver.Firefox(service=service)
+        elif request.param == "edge":
+            service = EdgeService(EdgeChromiumDriverManager().install())
+            web_driver = webdriver.Edge(service=service)
+        elif request.param == "safari":
+            web_driver = webdriver.Safari()
 
-    yield
-    print("======================================= close setup ========================================")
-    web_driver.close()
+        web_driver.maximize_window()
+        request.cls.driver = web_driver
+
+        yield
+    except Exception as e:
+        print(f"Error during driver initialization: {e}")
+    finally:
+        print("======================================= close setup ========================================")
+        try:
+            web_driver.quit()
+        except Exception as e:
+            print(f"Error closing the browser: {e}")

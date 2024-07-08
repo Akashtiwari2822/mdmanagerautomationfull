@@ -42,6 +42,37 @@ class Test_Transfer(BaseTest):
 
     def test_Tranfer_profile_name_validation(self):
         self.pagename = Transfer(self.driver)
+        testdata = self.pagename.Create_validation_check_Transfercprofile('', self.validprefix,
+                                                                          self.validextention, self.remark,
+                                                                          self.overwritecheck, self.checksum, self.deleteafterfailure,
+                                                                          self.transferprotocal, self.operationtype)
+        assert testdata == Testdata.TRANSFERPROFILENAMEMESSAGE
+
+    def test_Tranfer_Check_sum_validation(self):
+        self.pagename = Transfer(self.driver)
+        testdata = self.pagename.Create_validation_check_Transfercprofile('', self.validprefix,
+                                                                          self.validextention, self.remark,
+                                                                          self.overwritecheck, '', self.deleteafterfailure,
+                                                                          self.transferprotocal, self.operationtype)
+        assert testdata == Testdata.TRANSFERCHECKSUM
+    def test_Tranfer_Tansfer_protocol_validation(self):
+        self.pagename = Transfer(self.driver)
+        testdata = self.pagename.Create_validation_check_Transfercprofile('', self.validprefix,
+                                                                          self.validextention, self.remark,
+                                                                          self.overwritecheck, self.checksum, self.deleteafterfailure,
+                                                                          '', self.operationtype)
+        assert testdata == Testdata.TRANSFERPROTOCOL
+
+    def test_Tranfer_optaion_type_validation(self):
+        self.pagename = Transfer(self.driver)
+        testdata = self.pagename.Create_validation_check_Transfercprofile('', self.validprefix,
+                                                                          self.validextention, self.remark,
+                                                                          self.overwritecheck, self.checksum, self.deleteafterfailure,
+                                                                          self.transferprotocal, '')
+        assert testdata == Testdata.TRANSFERPROTOCOL
+        
+    def test_Tranfer_profile_Create(self):
+        self.pagename = Transfer(self.driver)
         testdata = self.pagename.Create_validation_check_Transfercprofile(self.profilename, self.validprefix,
                                                                           self.validextention, self.remark,
                                                                           self.overwritecheck, self.checksum, self.deleteafterfailure,
